@@ -4,7 +4,19 @@
 
 ![Status](https://img.shields.io/pypi/status/freeGPT)
 
+Version: 1.0.1
+
+Author: RedPiar
+
 freeGPT provides free access to text and image generation models.
+
+# Contents
+
+1. [Description](#desc)
+2. [Models](#sources)
+3. [Examples](#examples)
+   1. [TextGen](#completion)
+   2. [ImageGen](#generation)
 
 ## Getting Started:
 
@@ -22,7 +34,7 @@ freeGPT provides free access to text and image generation models.
 
 ## Examples:
 
-### Text Completion:
+### Completion:
 
 ```python
 from freeGPTFix import Client
@@ -36,7 +48,7 @@ while True:
         print(f"🤖: {e}")
 ```
 
-### Image Generation:
+### Generation:
 
 ```python
 from freeGPTFix import Client
