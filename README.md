@@ -8,7 +8,7 @@ freeGPT provides free access to text and image generation models.
 
 ## Getting Started:
 
-    python -m pip install -U freeGPTFix
+    None
 
 ## Sources:
 
