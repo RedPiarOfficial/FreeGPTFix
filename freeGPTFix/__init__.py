@@ -2,7 +2,7 @@ from freeGPTFix import *
 import requests
 __author__ = "RedPiar"
 __Name__ = "freeGPTFix"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 url = f"https://pypi.org/pypi/{__Name__}/json"
     
@@ -13,4 +13,4 @@ if response.status_code == 200:
         
     version = data['info']['version']
 if version != __version__:
-	print(f"Your version {__version__}, New version {version}")
+	print(f"[freeGPTFix] Your version {__version__}, New version {version}")
