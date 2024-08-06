@@ -39,7 +39,7 @@ while True:
 ### Image Generation:
 
 ```python
-from freeGPT import Client
+from freeGPTFix import Client
 from PIL import Image
 from io import BytesIO
 
