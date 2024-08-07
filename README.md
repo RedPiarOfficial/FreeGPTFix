@@ -34,7 +34,7 @@ I also plan to improve this project and make it much better. An update will be r
 | ------------ | ------------------------------------------------------ | ------------ |
 | gpt3         | [chat9.yqcloud.top](https://chat9.yqcloud.top/)        | :white_check_mark: |
 | gpt4         | [you.com](https://you.com/)                            |  :white_check_mark: |
-| gpt3_5       | [vitalentum.net](https://vitalentum.net/free-chat-gpt) | :x: |
+| gpt3_5       | [vitalentum.net](https://vitalentum.net/free-chat-gpt) | :white_check_mark: |
 | prodia       | [prodia.com](https://prodia.com/)                      |  :white_check_mark: |
 | pollinations | [pollinations.ai](https://pollinations.ai/)            | :white_check_mark: |
 
