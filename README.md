@@ -17,7 +17,8 @@ freeGPT provides free access to text and image generation models.
 3. [Examples](#examples)
    1. [TextGen](#completion)
    2. [ImageGen](#generation)
-4. [Contacts](#contacts)
+4. [ChangeLog](change-log)
+5. [Contacts](#contacts)
 
 ## Getting Started:
 
