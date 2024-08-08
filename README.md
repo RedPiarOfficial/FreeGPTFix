@@ -79,7 +79,7 @@ Version is numbered in the MAJOR.MINOR.PATCH format.
 - MINOR: Represents a minor release with new features or improvements that are backward-compatible.
 - PATCH: Denotes a patch release, which fixes bugs and addresses security vulnerabilities without introducing new features.
 
-## [1.0.8] 2024-08-08
+### [1.0.8] 2024-08-08
 - Resolved an issue with gpt3.5.
 - Implemented sessionID generation for testing purposes.
 
