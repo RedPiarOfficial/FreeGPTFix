@@ -2,7 +2,7 @@ from freeGPTFix import *
 import requests
 __author__ = "RedPiar"
 __Name__ = "freeGPTFix"
-__version__ = "1.0.5"
+__version__ = "1.0.8"
 
 url = f"https://pypi.org/pypi/{__Name__}/json"
 	
