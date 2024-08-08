@@ -71,10 +71,21 @@ while True:
         print(f"🤖: {e}")
 ```
 
+# Change Log
+Version is numbered in the MAJOR.MINOR.PATCH format.
+
+- MAJOR: Indicates a major release with significant changes, potentially breaking compatibility with older versions.
+- MINOR: Represents a minor release with new features or improvements that are backward-compatible.
+- PATCH: Denotes a patch release, which fixes bugs and addresses security vulnerabilities without introducing new features.
+
+## [1.0.8] 2024-08-08
+- Resolved an issue with gpt3.5.
+- Implemented sessionID generation for testing purposes.
+
 # Contacts
 | **Category**   | **Description** | **Link** |
 |----------------|-----------------|----------|
-| **My Contacts**|                 |          |
+| **Contacts**|                 |          |
 | Telegram       |                 | [Telegram](https://t.me/Redpiar) |
 | TG Channel     |                 | [TG Channel](https://t.me/BotesForTelegram) |
 | TikTok         |                 | [TikTok](https://www.tiktok.com/@redpiar) |
