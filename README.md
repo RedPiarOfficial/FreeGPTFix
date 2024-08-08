@@ -4,7 +4,7 @@
 
 ![Status](https://img.shields.io/pypi/status/freeGPT)
 
-Version: 1.0.1
+Version: 1.0.8
 
 Author: RedPiar
 
