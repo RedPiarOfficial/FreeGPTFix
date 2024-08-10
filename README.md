@@ -6,7 +6,7 @@
 
 [DOCS](https://red-3.gitbook.io/freegptfix/getting-started/quickstart)
 
-Version: 1.0.8
+Version: 1.1.0
 
 Author: RedPiar
 
