@@ -19,8 +19,7 @@ freeGPT provides free access to text and image generation models.
 3. [Examples](#examples)
    1. [TextGen](#completion)
    2. [ImageGen](#generation)
-4. [ChangeLog](#change-log)
-5. [Contacts](#contacts)
+4. [Contacts](#contacts)
 
 ## Getting Started:
 
@@ -73,17 +72,6 @@ while True:
     except Exception as e:
         print(f"🤖: {e}")
 ```
-
-# Change Log
-Version is numbered in the MAJOR.MINOR.PATCH format.
-
-- MAJOR: Indicates a major release with significant changes, potentially breaking compatibility with older versions.
-- MINOR: Represents a minor release with new features or improvements that are backward-compatible.
-- PATCH: Denotes a patch release, which fixes bugs and addresses security vulnerabilities without introducing new features.
-
-### [1.0.8] 2024-08-08
-- Resolved an issue with gpt3.5.
-- Implemented sessionID generation for testing purposes.
 
 # Contacts
 | **Category**   | **Description** | **Link** |
