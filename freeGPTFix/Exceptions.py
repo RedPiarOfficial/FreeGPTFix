@@ -1,20 +1,28 @@
 class XwpNonceError(Exception):
-	def __init__(self):
-		super().__init__()
+    """Exception raised for errors related to x-wp-nonce generation."""
 
-	def __str__(self):
-		return f'Error generating important component x-wp-nonce, please contact me: @Redpiar'
+    def __init__(self, message):
+        super().__init__(message)
+
+    def __str__(self):
+        return f'Error generating x-wp-nonce: {self.args[0]}. Please contact @Redpiar.'
+
 
 class SessionIDError(Exception):
-	def __init__(self):
-		super().__init__()
+    """Exception raised for errors related to SessionID generation."""
 
-	def __str__(self):
-		return f'Error generating important component SessionID, please contact me: @Redpiar'
+    def __init__(self, message):
+        super().__init__(message)
+
+    def __str__(self):
+        return f'Error generating SessionID: {self.args[0]}. Please contact @Redpiar.'
+
 
 class CookiesError(Exception):
-	def __init__(self):
-		super().__init__()
+    """Exception raised for errors related to cookie generation."""
 
-	def __str__(self):
-		return f'Error generating important component Cookie, please contact me: @Redpiar'
+    def __init__(self, message):
+        super().__init__(message)
+
+    def __str__(self):
+        return f'Error generating Cookie: {self.args[0]}. Please contact @Redpiar.'

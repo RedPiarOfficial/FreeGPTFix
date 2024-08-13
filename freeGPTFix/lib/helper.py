@@ -3,14 +3,12 @@ import re
 import json
 from .headers import ROOM_HEADERS
 from ..Exceptions import SessionIDError, XwpNonceError, CookiesError
+
 class session:
 	def __init__(self):
 		self.data = {"cookies": {}, "active": {}}
-		try:
-			del ROOM_HEADERS["x-wp-nonce"]
-			del ROOM_HEADERS["cookie"]
-		except:
-			pass
+		self._cleanup_headers()
+
 		self.headers = {
 			'authority': 'partner.googleadservices.com',
 			'path': '/gampad/cookie.js?domain=chatgpt5free.com&client=partner-pub-2632145759680618&product=SAS&callback=__sasCookie',
@@ -28,50 +26,74 @@ class session:
 			'sec-fetch-site': 'cross-site',
 			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
 			'x-client-data': 'CI62yQEIpbbJAQipncoBCMeUywEIk6HLAQiFoM0B'
-			}
+		}
+
+	def _cleanup_headers(self):
+		"""Remove specific keys from ROOM_HEADERS if they exist."""
+		ROOM_HEADERS.pop("x-wp-nonce", None)
+		ROOM_HEADERS.pop("cookie", None)
 	def create(self):
-		if not self.CreateCookies():
-			raise CookiesError
-		if not self.CreateSessionID():
-			raise SessionIDError
-		if not self.activeSession():
-			raise XwpNonceError
+		"""Creates a session with the necessary cookies and headers."""
+		if not self._create_cookies():
+			raise CookiesError("Failed to create cookies.")
+
+		if not self._create_session_id():
+			raise SessionIDError("Failed to create session ID.")
+
+		if not self._activate_session():
+			raise XwpNonceError("Failed to activate session.")
 
 		return self.data
 
-	def CreateSessionID(self):
-		response2 = requests.post('https://chatgpt5free.com/')
-		for cookie in response2.cookies:
-			if cookie.name == "mwai_session_id":
-				self.data["cookies"]["mwai_session_id"] = cookie.value
+	def _create_session_id(self):
+		"""Fetch the session ID and store it in self.data."""
+		try:
+			response = requests.post('https://chatgpt5free.com/')
+			response.raise_for_status()
+			for cookie in response.cookies:
+				if cookie.name == "mwai_session_id":
+					self.data["cookies"]["mwai_session_id"] = cookie.value
+					return True
+		except requests.RequestException as e:
+			print(f"Error creating session ID: {e}")
+		return False
+
+	def _create_cookies(self):
+		"""Fetch cookies from the external service and store them in self.data."""
+		try:
+			response = requests.get(
+				'https://partner.googleadservices.com/gampad/cookie.js?domain=chatgpt5free.com&client=partner-pub-2632145759680618&product=SAS&callback=__sasCookie',
+				headers=self.headers
+			)
+			response.raise_for_status()
+
+			json_match = re.search(r'__sasCookie\((\{.*\})\);', response.text)
+			if json_match:
+				json_data = json_match.group(1)
+				data = json.loads(json_data)
+
+				cookies = data.get('_cookies_', [])
+				if len(cookies) >= 2:
+					self.data["cookies"]["__gsas"] = cookies[0]['_value_']
+					self.data["cookies"]["__gpi"] = cookies[1]['_value_']
+					return True
+		except requests.RequestException as e:
+			print(f"Error creating cookies: {e}")
+		return False
+
+	def _activate_session(self):
+		"""Activate the session by sending the required headers."""
+		try:
+			ROOM_HEADERS["cookie"] = '; '.join(f'{key}={value}' for key, value in self.data["cookies"].items())
+			response = requests.post("https://chatgpt5free.com/wp-json/mwai/v1/start_session", headers=ROOM_HEADERS)
+			response.raise_for_status()
+
+			nonce = response.json().get("restNonce")
+			if nonce:
+				self.data["active"]["x-wp-nonce"] = nonce
+				ROOM_HEADERS["x-wp-nonce"] = nonce
 				return True
+		except requests.RequestException as e:
+			print(f"Error activating session: {e}")
 		return False
 
-	def CreateCookies(self):
-		response = requests.get(
-			'https://partner.googleadservices.com/gampad/cookie.js?domain=chatgpt5free.com&client=partner-pub-2632145759680618&product=SAS&callback=__sasCookie',
-			headers=self.headers
-		)
-		json_match = re.search(r'__sasCookie\((\{.*\})\);', response.text)
-		if json_match:
-			json_data = json_match.group(1)
-			# Преобразование строки JSON в словарь Python
-			data = json.loads(json_data)
-			
-			# Извлечение куки
-			cookies = data.get('_cookies_', [])
-			
-			self.data["cookies"]["__gsas"] = cookies[0]['_value_']
-			self.data["cookies"]["__gpi"] = cookies[1]['_value_']
-			return True
-		return False
-
-	def activeSession(self):
-		ROOM_HEADERS["cookie"] = '; '.join(f'{key}={value}' for key, value in self.data["cookies"].items())
-		resp = requests.post("https://chatgpt5free.com/wp-json/mwai/v1/start_session", headers=ROOM_HEADERS)
-		if resp.json().get("restNonce"):
-			self.data["active"]["x-wp-nonce"] = resp.json().get("restNonce")
-			ROOM_HEADERS["x-wp-nonce"] = resp.json().get("restNonce")
-			return True
-		else:
-			return False

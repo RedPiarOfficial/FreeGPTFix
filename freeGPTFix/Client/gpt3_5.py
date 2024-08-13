@@ -6,6 +6,7 @@ from uuid import uuid4
 from ..lib.headers import ROOM_HEADERS
 from ..lib.proxy import proxy
 from ..lib.helper import session
+import time
 class Completion:
 	def __init__(self):
 		session().create()
