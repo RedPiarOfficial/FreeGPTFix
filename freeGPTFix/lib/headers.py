@@ -16,6 +16,21 @@ ROOM_HEADERS={"authority": "chatgpt5free.com",
 		"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
 		'x-wp-nonce': '73e2407183'
 	}
+
+geminiRoom_HEADERS = {
+			"authority": "editee.com",
+			"path": "/submit/chatgptfree",
+			"scheme": "https",
+			"accept": "application/json, text/plain, */*",
+			"accept-encoding": "gzip, deflate, br",
+			"accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+			"content-type": "application/json",
+			"cookie": "editeecom_session=None",
+			"origin": "https://editee.com",
+			"referer": "https://editee.com/chat-gpt",
+			"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
+			"x-requested-with": "XMLHttpRequest"
+}
 GPT3_HEADERS = {
   "authority": "api.binjie.fun",
   "method": "POST",

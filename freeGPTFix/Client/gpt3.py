@@ -6,6 +6,7 @@ from requests import post
 from requests.exceptions import RequestException
 from ..lib.headers import GPT3_HEADERS
 from ..lib.proxy import proxy
+from ..lib import roles 
 class Completion:
 	"""
 	This class provides methods for generating completions based on prompts.
@@ -30,8 +31,8 @@ class Completion:
 				headers=GPT3_HEADERS,
 				json={
 					"prompt": prompt,
-					"withoutContext": True,
-					"stream": False,
+					"withoutContext": False,
+					"stream": False
 				},
 			)
 			resp.encoding = "utf-8"

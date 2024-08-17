@@ -2,7 +2,7 @@
 freeGPT's prodia module
 """
 
-from requests import get
+from ..lib.proxy import proxy
 from random import randint
 from requests.exceptions import RequestException
 
@@ -26,7 +26,7 @@ class Generation:
 			"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36",
 		}
 		try:
-			resp = get(
+			resp = proxy.get(
 				"https://api.prodia.com/generate",
 				params={
 					"new": "true",
@@ -44,10 +44,10 @@ class Generation:
 			)
 			data = resp.json()
 			while True:
-				resp = get(f"https://api.prodia.com/job/{data['job']}", headers=headers)
+				resp = proxy.get(f"https://api.prodia.com/job/{data['job']}", headers=headers)
 				json = resp.json()
 				if json["status"] == "succeeded":
-					return get(
+					return proxy.get(
 						f"https://images.prodia.xyz/{data['job']}.png?download=1",
 						headers=headers,
 					).content

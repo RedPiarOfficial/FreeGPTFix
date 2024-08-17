@@ -2,7 +2,7 @@
 freeGPT's pollinations module
 """
 
-from requests import get
+from ..lib.proxy import proxy
 from requests.exceptions import RequestException
 from random import randint
 
@@ -23,7 +23,7 @@ class Generation:
 			resp: The generated image content
 		"""
 		try:
-			return get(
+			return proxy.get(
 				url=f"https://image.pollinations.ai/prompt/{prompt}{randint(1, 10000)}",
 				timeout=30,
 			).content

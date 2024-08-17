@@ -1,68 +1,80 @@
-import requests
+from re import findall
+import cloudscraper
 from uuid import uuid4
-from re import findall, sub
-from ..lib.proxy import proxy
+from requests.exceptions import RequestException
+import json
+
 class Completion:
-	"""
-	This class provides methods for generating completions based on prompts.
-	"""
+    """
+    This class provides methods for interacting with the You.com chat API.
+    """
 
-	def create(self, prompt):
-		"""
-		Generate a completion based on the provided prompt.
+    def __init__(self):
+        self.scraper = cloudscraper.create_scraper()  # Create a Cloudscraper session
 
-		Args:
-			prompt (str): The input prompt to generate a completion from.
+    def create(self, query):
+        try:
+            # Prepare the request parameters
+            response = self.scraper.get(
+                "https://you.com/api/streamingSearch",
+                headers={
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0",
+                    "Accept": "text/event-stream",
+                    "Accept-Language": "en-US,en;q=0.9,en-IN;q=0.8",
+                    "Referer": "https://you.com/search?q=hi&fromSearchBar=true&tbm=youchat",
+                    "Connection": "keep-alive",
+                    "DNT": "1",
+                },
+                cookies={
+                    "uuid_guest_backup": uuid4().hex,
+                    "youchat_personalization": "true",
+                    "youchat_smart_learn": "true",
+                    "youpro_subscription": "false",
+                    "ydc_stytch_session": uuid4().hex,
+                    "ydc_stytch_session_jwt": uuid4().hex,
+                    "__cf_bm": uuid4().hex,
+                },
+                params={
+                    "q": query,
+                    "page": 1,
+                    "count": 10,
+                    "safeSearch": "Moderate",
+                    "mkt": "en-IN",
+                    "domain": "youchat",
+                    "use_personalization_extraction": "true",
+                    "queryTraceId": str(uuid4()),
+                    "chatId": str(uuid4()),
+                    "conversationTurnId": str(uuid4()),
+                    "pastChatLength": 0,
+                    "isSmallMediumDevice": "true",
+                    "selectedChatMode": "default",
+                    "traceId": str(uuid4()),
+                    "chat": "[]"
+                },
+            )
 
-		Returns:
-			str: The generated completion as a text string.
+            # Check for successful response
+            if response.status_code != 200:
+                raise RequestException(f"Request failed with status code {response.status_code}")
 
-		Raises:
-			Exception: If the response does not contain the expected "youChatToken".
-		"""
-		try:
-			response = proxy.get(
-				"https://you.com/api/streamingSearch",
-				headers={
-					"cache-control": "no-cache",
-					"referer": "https://you.com/search?q=gpt4&tbm=youchat",
-					"cookie": f"safesearch_guest=Off; uuid_guest={str(uuid4())}",
-					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
-				},
-				params={
-					"q": prompt,
-					"page": 1,
-					"count": 10,
-					"safeSearch": "Off",
-					"onShoppingPage": False,
-					"mkt": "",
-					"responseFilter": "WebPages,Translations,TimeZone,Computation,RelatedSearches",
-					"domain": "youchat",
-					"queryTraceId": str(uuid4()),
-					"chat": [],
-				},
-			)
-			if "youChatToken" not in response.text:
-				raise Exception("Unable to fetch the response.")
+            if "youChatToken" not in response.text:
+                raise RequestException("Unable to fetch the response.")
 
-			token = (
-				"".join(
-					findall(
-						r"{\"youChatToken\": \"(.*?)\"}",
-						response.text
-					)
-				)
-				.replace("\\n", "\n")
-				.replace("\\\\", "\\")
-				.replace('\\"', '"')
-			)
-			decoded_string = token.encode('utf-8').decode('unicode_escape')
-			text = sub(r'[#*]', '', decoded_string)
-			return text
-		
-		except requests.RequestException as e:
-			print("Request Error:", e)
-			raise
-		except Exception as e:
-			print("General Error:", e)
-			raise
+            # Extract the youChatToken value
+            tokens = self.extract_youchat_tokens(response.text)
+            return tokens
+
+        except RequestException as e:
+            print(f"An error occurred: {e}")
+            raise
+
+    def extract_youchat_tokens(self, response_text):
+
+        tokens = []
+        for line in response_text.split('\n'):
+            if line.startswith('data: ') and 'youChatToken' in line:
+                data = json.loads(line[6:])
+                token = data.get('youChatToken', '')
+                if token:
+                    tokens.append(token)
+        return ''.join(tokens)

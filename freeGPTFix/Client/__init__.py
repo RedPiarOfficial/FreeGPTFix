@@ -1,9 +1,11 @@
-from freeGPTFix.Client import gpt3, gpt3_5, gpt4, prodia, pollinations
+from freeGPTFix.Client import gpt3, gpt3_5, gpt4, gpt4_omni, gemini, prodia, pollinations
 
 textGenModels = {
 	"gpt3": gpt3,
 	"gpt4": gpt4,
 	"gpt3_5": gpt3_5,
+	"gpt4o": gpt4_omni,
+	"gemini": gemini
 }
 
 imageGenModels = {"prodia": prodia, "pollinations": pollinations}
