@@ -6,7 +6,7 @@
 
 [DOCS](https://red-3.gitbook.io/freegptfix/getting-started/quickstart)
 
-Version: 1.2.0
+Version: 1.3.0
 
 Author: RedPiar
 
@@ -32,13 +32,15 @@ In [FreeGPT](https://pypi.org/project/freeGPT/), GPT-3 and GPT-3.5 do not work, 
 I also plan to improve this project and make it much better. An update will be released soon that will significantly distinguish [FreeGPTFix](https://github.com/RedPiarOfficial/FreeGPTFix) from [FreeGPT](https://pypi.org/project/freeGPT/).
 ## Sources:
 
-| Model        | Website                                                | status       |
-| ------------ | ------------------------------------------------------ | ------------ |
-| gpt3         | [chat9.yqcloud.top](https://chat9.yqcloud.top/)        | :white_check_mark: |
-| gpt4         | [you.com](https://you.com/)                            |  :white_check_mark: |
-| gpt3_5       | [vitalentum.net](https://vitalentum.net/free-chat-gpt) | :white_check_mark: |
-| prodia       | [prodia.com](https://prodia.com/)                      |  :white_check_mark: |
-| pollinations | [pollinations.ai](https://pollinations.ai/)            | :white_check_mark: |
+| Model        | Website                                                |
+| ------------ | ------------------------------------------------------ |
+| gpt3         | [chat9.yqcloud.top](https://chat9.yqcloud.top/)        |
+| gpt4         | [you.com](https://you.com/)                            |
+| gpt3_5       | [vitalentum.net](https://vitalentum.net/free-chat-gpt) |
+| gpt4_omni       | [aichatonline.org](https://aichatonline.org/) |
+| gemini       | [editee.com](https://editee.com/chat-gpt) |
+| prodia       | [prodia.com](https://prodia.com/)                      |
+| pollinations | [pollinations.ai](https://pollinations.ai/)            |
 
 ## Examples:
 
